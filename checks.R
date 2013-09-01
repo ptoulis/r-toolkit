@@ -1,4 +1,8 @@
-## Unit tests.
+# Copyright 2013 Panos Toulis
+# Author: Panos Toulis(ptoulis@fas.harvard.edu)
+#
+# Simple checks for comparing objects (e.g. lists), including
+# logical checks, set checks and statistical tests.
 stop.now <- function(x, y, msg) {
   print(sprintf("[FAIL]: %s", paste(msg, collapse=" : ")))
   str(x, width=80)
