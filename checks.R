@@ -4,10 +4,13 @@
 # Simple checks for comparing objects (e.g. lists), including
 # logical checks, set checks and statistical tests.
 stop.now <- function(x, y, msg) {
-  print(sprintf("[FAIL]: %s", paste(msg, collapse=" : ")))
-  str(x, width=80)
-  str(y, width=80)
-  stop("")
+  compact <- function(a) {
+    if(is.vector(a))
+      return(paste(head(a, min(length(a), 80)), collapse=", "))
+  }
+  stop("-------\nDetails:\n",sprintf("[FAIL]: %s", paste(msg, collapse=" : ")), "\n",
+           sprintf("x = %s", compact(x)), "\n", 
+           sprintf("y = %s", compact(y)))
 }
 
 CHECK_TRUE <- function(x, msg="n/a") {
@@ -16,8 +19,7 @@ CHECK_TRUE <- function(x, msg="n/a") {
 }
 
 CHECK_EQ <- function(x, y, msg="n/a") {
-  if (!all(x==y)) stop.now(x, y, c("Arrays not equal.", msg))
-  return (TRUE)  
+  if (!all(x==y)) stop.now(x, y, c("Arrays not equal.", msg)) 
 }
 
 CHECK_GE <- function(x, y, msg="n/a") {
@@ -70,7 +72,7 @@ CHECK_MU0 <- function(x, mu0, msg="n/a") {
 }
 
 CHECK_ERROR <- function(expr, msg="n/a") {
-  x = try(eval, expr, silent=T)
+  x = try(eval(expr), silent=T)
   if(!inherits(x, "try-error"))
     stop(sprintf("ERROR did not occur: %s", msg))
 }
