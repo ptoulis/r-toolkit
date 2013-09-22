@@ -68,3 +68,9 @@ CHECK_MU0 <- function(x, mu0, msg="n/a") {
   CHECK_INTERVAL(mu0, min=mean(x) - 2 * boot.se, max=mean(x) + 2*boot.se,
                  msg=c("Not in bootstrap inteval", msg))
 }
+
+CHECK_ERROR <- function(expr, msg="n/a") {
+  x = try(eval, expr, silent=T)
+  if(!inherits(x, "try-error"))
+    stop(sprintf("ERROR did not occur: %s", msg))
+}
