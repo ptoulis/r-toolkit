@@ -1,6 +1,7 @@
 ## Log utilities.
 kLogFile <- "rtools-logs.txt"
-kCurrentLogLevel = 1
+kCurrentLogLevel = 10
+kLogToStdOut = T
 #  FINE DEBUG  INFO  WARNING   ERROR
 #   0     1      2     3        4
 library(stringr)
@@ -10,7 +11,12 @@ if (file.exists(file=kLogFile)) {
 
 logthis <- function(x, level) {
   wline <- function(vec) {
-    write(str_c(vec, collapse="\t"), file=kLogFile, append=T)
+    if(kLogToStdOut) {
+      print(sprintf("%s", str_c(vec, collapse=" ")))
+    } else {
+      if(file.exists(kLogFile))
+        write(str_c(vec, collapse="\t"), file=kLogFile, append=T)
+    }
   }
   if (level >= kCurrentLogLevel) {
     preamble <- sprintf("%s::", date())
