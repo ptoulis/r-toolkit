@@ -21,6 +21,13 @@ stop.now <- function(x, y, msg) {
         sprintf("y = %s...", compact(y)))
 }
 
+CHECK_notNA <- function(x, msg="Not-NA check") {
+  if(any(is.na(x)))
+    stop.now(x, "n/a (ignore)", c("INPUT has NA", msg))
+  if(any(is.null(x)))
+    stop.now(x, "n/a (ignore)", c("INPUT has NULL", msg))
+}
+
 CHECK_INPUT <- function(x, msg="n/a") {
   if(length(x) < 1) {
     stop.now(x, "n/a (ignore)", c("INPUT empty", msg))
@@ -30,6 +37,7 @@ CHECK_INPUT <- function(x, msg="n/a") {
   if(any(is.null(x)))
     stop.now(x, "n/a (ignore)", c("INPUT has NULL", msg))
 }
+
 CHECK_TRUE <- function(x, msg="n/a") {
   if (!x)
     stop.now(x, "n/a (ignore)", c("Logical test failed", msg))
