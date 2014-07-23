@@ -22,7 +22,7 @@ stop.now <- function(x, y, msg) {
 }
 
 CHECK_identical <- function(x, y, msg="Identical vector check") {
-  CHECK_TRUE(identical(x, y, msg))
+  CHECK_TRUE(identical(x, y), msg)
 }
 
 CHECK_notNA <- function(x, msg="Not-NA check") {
