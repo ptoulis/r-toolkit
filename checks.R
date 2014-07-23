@@ -21,6 +21,10 @@ stop.now <- function(x, y, msg) {
         sprintf("y = %s...", compact(y)))
 }
 
+CHECK_identical <- function(x, y, msg="Identical vector check") {
+  CHECK_TRUE(identical(x, y, msg))
+}
+
 CHECK_notNA <- function(x, msg="Not-NA check") {
   if(any(is.na(x)))
     stop.now(x, "n/a (ignore)", c("INPUT has NA", msg))
